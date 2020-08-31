@@ -25,3 +25,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 //  ROUTE FOR ADMIN DASHBOARD
 //  --------------------------
 Route::get('admin', 'HomeController@admin')->name('admin')->middleware('admin');
+
+
+//  --------------------------
+//  ROUTE FOR ADMIN DASHBOARD
+//  --------------------------
+
+Route::resource('workinghour', 'WorkingHourController');

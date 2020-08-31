@@ -17,7 +17,7 @@
                     {{ __('You are logged in!') }}
                     <br>
                     {{ __('Looking for Appointment') }}
-                    <form action="" method="POST">
+                    <form action="" method="">
 
                     </form>
                 </div>

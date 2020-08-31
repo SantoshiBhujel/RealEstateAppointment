@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Appointment;
+use App\WorkingHour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,6 +38,7 @@ class HomeController extends Controller
 
     public function admin()
     {
-        return view('admin.admin');
+        $working_days= WorkingHour::get();
+        return view('admin.admin',compact('working_days'));
     }
 }
