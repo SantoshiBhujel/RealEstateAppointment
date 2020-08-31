@@ -14,12 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
-                    <br>
-                    {{ __('Looking for Appointment') }}
-                    <form action="" method="POST">
-
-                    </form>
+                    {{ __('Welcome Admin') }}
                 </div>
             </div>
         </div>
