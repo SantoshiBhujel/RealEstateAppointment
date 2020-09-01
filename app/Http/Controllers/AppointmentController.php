@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use App\WorkingHour;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -35,7 +36,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -81,5 +82,24 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         //
+    }
+
+    public function slotSearch(Request $request)
+    {
+        $days= WorkingHour::where('date',$request->date)->get();
+
+        if(count($days)==0)
+        {
+            return back()->with('error',"Office's day off.");
+        }
+
+        $date=$request->date;
+        foreach($days as $day)
+        {
+            $slots=$day->timeslots->where('available', "yes");
+        }
+        
+        return view('home',compact('slots','date'));
+        // $slot= ;s
     }
 }

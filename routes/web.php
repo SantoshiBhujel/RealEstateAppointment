@@ -28,7 +28,15 @@ Route::get('admin', 'HomeController@admin')->name('admin')->middleware('admin');
 
 
 //  --------------------------
-//  ROUTE FOR ADMIN DASHBOARD
+//  ROUTE FOR  WORKING HOUR
 //  --------------------------
 
 Route::resource('workinghour', 'WorkingHourController');
+
+
+//  --------------------------
+//  ROUTE FOR  WORKING HOUR
+//  --------------------------
+
+Route::resource('appoinment', 'AppointmentController');
+Route::post('appointment/slot/search','AppointmentController@slotSearch')->name('slot.search');

@@ -32,7 +32,8 @@ class HomeController extends Controller
         }
         else
         {
-            return view('home');
+            $slots=[];
+            return view('home',compact('slots'));
         }
     }
 
