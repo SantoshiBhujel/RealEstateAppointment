@@ -41,10 +41,11 @@ class WorkingHourController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-        if(date_create($request->start_at)>=date_create($request->finish_at))
+        $hour= new WorkingHour();
+        $result=$hour->dateCheck($request->start_at,$request->finish_at);
+        if($result!='true')
         {
-            return back()->with('error','Start must be greater than or equal to end time');
+            return back()->with('error',$result);
         }
 
         // $request->validate([
@@ -60,11 +61,9 @@ class WorkingHourController extends Controller
         ]);
         
         $end_time=date_create($request->finish_at)->modify('-1 hour');
-        //print_r($end_time);
         $interval = date_interval_create_from_date_string('1 hour');
         $time = date_create('07:00');
 
-       
         for ($i=1; $i<=10; $i++) 
         {
             $timeslot= new Timeslot();

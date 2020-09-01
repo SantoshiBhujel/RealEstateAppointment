@@ -16,4 +16,17 @@ class WorkingHour extends Model
     {
         return $this->hasMany(Timeslot::class, 'workinghours_id', 'id');
     }
+
+    public function dateCheck($start,$finish)
+    {
+        if(date_create($start)>=date_create($finish))
+        {
+            return 'Finish must be greater than start time';
+        }
+        if(date_create($start)->modify('+1 hour')>date_create($finish))
+        {
+            return 'Finish must be greater than start time by at least one hour.';
+        }
+        return true;
+    }
 }
