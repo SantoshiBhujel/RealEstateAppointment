@@ -18,9 +18,9 @@ class CreateAppointmentsTable extends Migration
             $table->unsignedBigInteger('users_id');
             $table->foreign('users_id')->references('id')->on('users')->softDelete('cascade');
             $table->date('date');
+            $table->integer('slot');
             $table->time('start_time');
             $table->time('finish_time')->nullable();
-            $table->integer('slot');
             $table->timestamps();
         });
     }

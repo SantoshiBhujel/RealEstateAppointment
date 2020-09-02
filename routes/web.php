@@ -38,5 +38,5 @@ Route::resource('workinghour', 'WorkingHourController');
 //  ROUTE FOR  WORKING HOUR
 //  --------------------------
 
-Route::resource('appoinment', 'AppointmentController');
+Route::resource('appointment', 'AppointmentController');
 Route::post('appointment/slot/search','AppointmentController@slotSearch')->name('slot.search');

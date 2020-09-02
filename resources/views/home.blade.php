@@ -32,23 +32,22 @@
                             </button>
                         </div>
                     </form>
-
                 
                     @if (count($slots)>0)
                         <h3>Available slots for {{ $date ?? '' }}</h3>
                         <h4>Select any one of the slot</h4>
-                        <form action="" method="POST">
+                        <form action="{{ route('appointment.store') }}" method="POST">
 
                             @csrf
+
+                            <input type="hidden" name="date" id="date" value="{{ $date ?? '' }}">
                             
                             @foreach ($slots as $slot )
-                                <input type="radio" id="time" name="time" value="{{ $slot->slot }}">
+                                <input type="radio" id="slot" name="slot" value="{{ $slot->slot }}" required>
                                 <label for="time">{{ $slot->starts_at }}</label>
                             @endforeach
                             
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Appoint') }}
-                            </button>
+                            <input type="submit" value="Appoint" >
                         </form>
                     @endif
                 </div>

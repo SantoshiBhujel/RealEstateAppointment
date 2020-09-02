@@ -48,11 +48,11 @@ class WorkingHourController extends Controller
             return back()->with('error',$result);
         }
 
-        // $request->validate([
-        //     'date'=>'required | date',
-        //     'start_at'=>'nullable  | date_format:H:i',
-        //     'finish_at'=>'nullable | date_format:H:i|after:time_start'
-        // ]);
+        $request->validate([
+            'date'=>'required | date',
+            'start_at'=>'nullable',
+            'finish_at'=>'nullable |after:start_at'
+        ]);
 
         $day=WorkingHour::create([
             'date'=>$request->date,
