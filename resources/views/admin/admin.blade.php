@@ -2,11 +2,75 @@
 
 @section('content')
 <div class="container">
+    
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <div>
+                <h3>Appointment Schedule</h3>
+                {{-- table for appointed time slot --}}
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">DATE</th>
+                        <th scope="col">08:00 AM</th>
+                        <th scope="col">09:00 AM</th>
+                        <th scope="col">10:00 AM</th>
+                        <th scope="col">11:00 AM</th>
+                        <th scope="col">12:00 PM</th>
+                        <th scope="col">01:00 PM</th>
+                        <th scope="col">02:00 PM</th>
+                        <th scope="col">03:00 PM</th>
+                        <th scope="col">04:00 PM</th>
+                        <th scope="col">05:00 PM</th>
+                        
+                      </tr>
+                    </thead>
+                    @foreach ($days as $day)
+                        <tbody>
+                            <tr>
+                            <th scope="row">{{ $day->date }}</th>
+                            @foreach ($day->timeslots as $slot )
+
+                                @if( $slot->available == 'appointed')
+                                    <td>Appointed</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                
+                            @endforeach
+                        </tbody>
+                    @endforeach
+                    
+                  </table>
+            </div>
+
+            <h3>Appointment Details</h3>
+            <div>
+                {{-- table for appointed time slot --}}
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">DATE</th>
+                        {{-- <th scope="col">Date</th> --}}
+                        <th scope="col">Time</th>
+                        <th scope="col">By</th>
+                      </tr>
+                    </thead>
+                    @foreach ($appointments as $appointment)
+                        <tbody>
+                            <tr>
+                            <th scope="row">{{ $appointment->date }}</th>
+                            <td>{{ $appointment->start_time }}</td>
+                            <td> {{ $appointment->user->name }} </td>
+                            </tr>
+                        </tbody>
+                    @endforeach
+                    
+                  </table>
+            </div>
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
-
+                
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
