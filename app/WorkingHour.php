@@ -29,4 +29,17 @@ class WorkingHour extends Model
         }
         return true;
     }
+
+
+    public function dateAvailableOrNot($date)
+    {
+        $dates= WorkingHour::where('date',$date)->get();
+        return $dates;
+    }
+
+    public function getWorkingDaysFromToday()
+    {
+        $days= WorkingHour::where('date','>','yesterday')->orderBy('date')->get();
+        return $days;
+    }
 }

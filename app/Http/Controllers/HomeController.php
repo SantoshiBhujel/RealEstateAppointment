@@ -34,7 +34,8 @@ class HomeController extends Controller
         else
         {
             $slots=[];
-            return view('home',compact('slots'));
+            $days= WorkingHour::where('date','>','yesterday')->orderBy('date')->get();
+            return view('home',compact('slots','days'));
         }
     }
 

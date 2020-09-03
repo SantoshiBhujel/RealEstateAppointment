@@ -4,8 +4,47 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <div>
+                
+                <h3>Appointment Schedule</h3>
+                {{-- table for appointed time slot --}}
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">DATE</th>
+                        <th scope="col">08:00 AM</th>
+                        <th scope="col">09:00 AM</th>
+                        <th scope="col">10:00 AM</th>
+                        <th scope="col">11:00 AM</th>
+                        <th scope="col">12:00 PM</th>
+                        <th scope="col">01:00 PM</th>
+                        <th scope="col">02:00 PM</th>
+                        <th scope="col">03:00 PM</th>
+                        <th scope="col">04:00 PM</th>
+                        <th scope="col">05:00 PM</th>
+                        
+                      </tr>
+                    </thead>
+                    @foreach ($days as $day)
+                        <tbody>
+                            <tr>
+                            <th scope="row">{{ $day->date }}</th>
+                            @foreach ($day->timeslots as $slot )
+
+                                @if( $slot->available == 'yes')
+                                    <td style="background-color: rgb(84, 226, 84)">YES</td>
+                                @else
+                                    <td style="color: rgb(233, 82, 71)")>NO</td>
+                                @endif
+                                
+                            @endforeach
+                        </tbody>
+                    @endforeach
+                    
+                  </table>
+            </div>
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">{{ __('Looking for Appointment? ') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -15,7 +54,7 @@
                     @endif
 
                     <br>
-                    <h4>Looking for Appointment? Search for date you want to appoint</h4>
+                    <h4>Search for date you want to appoint</h4>
 
                     @include('includes.alerts')
                     <form action="{{ route('slot.search') }}" method="POST">

@@ -6,8 +6,10 @@ use App\Timeslot;
 use App\Appointment;
 use App\WorkingHour;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AppointmentRequest;
+use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
 {
@@ -39,10 +41,10 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'slot' =>'required| integer | min:1| max:3 '
-        ]);
-        
+        // if($request->slot==NULL)
+        // {
+        //     return back()->with('error',"Select a time");
+        // }
         $start_time= Timeslot::where('slot',$request->slot)->pluck('starts_at')->first();
         //dd($start_time);
         $appointment= new Appointment();
@@ -112,17 +114,23 @@ class AppointmentController extends Controller
 
     public function slotSearch(Request $request)
     {
-        $request->validate([
-            'date' =>' after:yesterday'
-        ]);
-        $days= WorkingHour::where('date',$request->date)->get();
+        // dd($request->date);
+        // dd(Carbon::today());
+        if($request->date <= Carbon::yesterday())
+        {
+            //return true;
+            return redirect()->route('home')->with('error',"Past Date not acceptable");
+        }
+        
+        $workingHour=new WorkingHour(); //instance of working hour
+        $date=$request->date;  //store date from request to $date 
+        $days= $workingHour->dateAvailableOrNot($date); //request bata aako date ko din off day ho ki hoena check garcha
 
         if(count($days)==0)
         {
             return redirect()->route('home')->with('error',"Office's day off.");
         }
 
-        $date=$request->date;
         foreach($days as $day)
         {
             $slots=$day->timeslots->where('available', "yes");
@@ -131,7 +139,33 @@ class AppointmentController extends Controller
         {
             return redirect()->route('home')->with('error',"No slots available. Try for some other day");
         }
-        return view('home',compact('slots','date'));
-        // $slot= ;s
+
+        $days=$workingHour->getWorkingDaysFromToday();
+        return view('home',compact('slots','date','days'));
+
+        // if($request->date < Carbon::today())
+        // {
+        //     return redirect()->route('home')->with('error',"Past Date not acceptable");
+        // }
+        // $days= WorkingHour::where('date',$request->date)->get();
+
+        // if(count($days)==0)
+        // {
+        //     return redirect()->route('home')->with('error',"Office's day off.");
+        // }
+
+        // $date=$request->date;
+        // foreach($days as $day)
+        // {
+        //     $slots=$day->timeslots->where('available', "yes");
+        // }
+        // if(count($slots)==0)
+        // {
+        //     return redirect()->route('home')->with('error',"No slots available. Try for some other day");
+        // }
+        // $days=WorkingHour::where('date','>','yesterday')->orderBy('date')->get();
+        // return view('home',compact('slots','date','days'));
+        
+
     }
 }
